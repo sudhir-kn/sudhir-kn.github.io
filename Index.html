@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+    <meta name="dcterms.created" content="Mon, 17 Jul 2023 02:38:15 GMT">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>CS 416 - Narrative Visualization</title>
+    <link rel="stylesheet" href="style/styles.css">
+    <style> /* set the CSS */
+
+        /* tooltip code adapted from https://bl.ocks.org/d3noob/a22c42db65eb00d4e369 */
+        /* body { font: 14px Arial;} */
+        /* div.tooltip {	
+            position: absolute;			
+            text-align: center;			
+            width: 400px;					
+            height: 28px;					
+            padding: 2px;				
+            font: 12px sans-serif;	
+            background: lightsteelblue;	
+            border: 0px;		
+            border-radius: 8px;			
+            pointer-events: none;			
+        }
+        div.wrapper {
+            display:inline-block;
+        } */
+
+    </style>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+</head>
+  <body scroll="no" style="overflow: hidden">
+  <!-- <body> -->
+        <section id="section_1">
+            <div style="text-align: center; border: thin solid black">
+                <div style="display: inline-block; font-size: large;">
+                    <h1>H1B Employer Data 2021-2023</h1>
+                </div>
+            </div>
+            
+            <div class="sec_1" style="height: 840px;">
+                <div class="sec_1_1" style="text-align:justify; width: 1272px; height: 830px; font-size: 16px;float: left;">
+                    <h2>Introduction:</h2>
+                    <p>The United States Citizenship and Immigration Services (<a href="https://uscis.gov" target="_blank">USCIS</a>) is an agency under 
+                        the U.S. Department of Homeland Security responsible for overseeing the country's immigration system. 
+                        Its primary role is to administer and enforce immigration laws, including the processing of various 
+                        visa applications.</p>
+        
+                    <p>The H1B visa is a non-immigrant visa category in the United States that allows U.S. employers to hire foreign 
+                        workers in specialty occupations. It is designed to bring highly skilled professionals from around the world 
+                        to work in specialized fields such as information technology, engineering, finance, healthcare, and more. 
+                        The H1B visa program helps address skill shortages in certain industries and contributes to the country's 
+                        economic growth and innovation.</p>
+        
+                    <p>To obtain an H1B visa, an employer must sponsor a foreign worker by filing a petition with USCIS. The employer 
+                        must demonstrate that the position requires specialized knowledge and that they were unable to find a qualified 
+                        U.S. worker to fill the role. Additionally, the employer must offer the foreign worker a prevailing wage and 
+                        comply with various regulatory requirements.</p>
+        
+                    <p>The H1B visa program is subject to an annual numerical cap, which limits the number of new H1B visas that can 
+                        be issued each fiscal year. The cap for most H1B visas is set at 65,000, with an additional 20,000 reserved 
+                        for individuals who hold advanced degrees from U.S. institutions. The demand for H1B visas often exceeds the 
+                        available slots, leading to a competitive and selective application process.</p>
+        
+                    <p>USCIS plays a crucial role in processing and adjudicating H1B visa petitions. They review the employer's 
+                        eligibility, the qualifications of the foreign worker, and ensure compliance with the relevant laws and 
+                        regulations. The agency's decisions on H1B visa petitions can have a significant impact on both employers 
+                        and individuals seeking to work in the United States under this program.</p>
+                    <p>Analyzing USCIS's H1B employer data can provide valuable insights into the industries, companies, and job 
+                        positions that rely on the H1B visa program, as well as trends in the program's utilization over time.</p>
+
+                </div>
+                <div class="sec_1_2" style="width: 1271px; height: 830px; float: right;">
+                    <p>This is a paragraph in second div from first section</p>
+                    <svg id="svg_1" width="1200" height="650"></svg>
+                    <br><br><br><br>
+                    <div class="buttons" style="text-align:center">
+                        <button type="button" onclick="trend(11)">H1B Trend</button>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <a href="#section_2" style="float:right"><span></span>Next</a>
+        </section>
+        <br><hr><br>
+
+        <section id="section_2">
+            <div style="text-align: center; border: thin solid black">
+                <div style="display: inline-block;">
+                    <h2>Top 10 Employers</h2>
+                </div>
+            </div>
+
+            
+            <!-- <p>While the previous graph showed how much each character spoke, this next graph showcases how often a character was mentioned.</p>
+            <p>To do this, we increase the character's mention value each time their name appears in the script, regardless of who said it.</p>
+            <p>Similar to the first chart, we see that Michael has been name dropped the most out of any character, with Dwight and Jim as second and third place overall.</p>
+            <p>Interestingly, we can see that Jim and Pam's names appeared at approximately equal frequencies up until Season 6, when Jim started to be mentioned much more frequently. </p>  -->
+            
+            <div class="svg_canvas" style="text-align: center;">
+                <svg id="svg_2" width="1200" height="650"></svg>
+            </div>
+                      
+            <br>
+            <div class="buttons" style="text-align:center">
+            <button type="button" onclick="topEmp(21)">Top Employers 2021</button>
+            <button type="button" onclick="topEmp(22)">Top Employers 2022</button>
+            <button type="button" onclick="topEmp(23)">Top Employers 2023</button> 
+            </div>
+            <br><br>
+            <a href="#section_1" style="float:left"><span></span>Prev</a>
+            <a href="#section_3" style="float:right"><span></span>Next</a>
+        </section>
+        <br><hr><br>
+
+        <section id="section_3">
+            <div style="text-align: center; border: thin solid black">
+                <div style="display: inline-block;">
+                    <h2>Based on Hiring State</h2>
+                </div>
+            </div>
+
+            
+            <!-- <p>This chart shows each of the episodes' rating as per IMDb.</p>
+            <p>With this chart, we can see that <i>The Office</i> never had an episode rate 6/10 or lower, and that there were multiple episodes that went above the 9/10 mark.</p>
+            <p>Moving the cursor over the chart, we notice that Seasons 2, 3, 4, and 5 were regularly rated with the best episodes, with a decline in the second half of Season 6 and first half of Season 7. This is when Dunder Miflin was incorporated into Sabre.</p>
+            <p>The back half of Season 6 has a spike in ratings as the show prepares for Michael's departure. Following Michael's final regular appearance, the show's ratings drop to their lowest scores, that is until the final few episodes of the series.</p> -->
+
+            <div class="svg_canvas" style="text-align: center;">
+                <svg id="svg_3" width="1200" height="650"></svg>
+            </div>
+            <br>
+            <div class="buttons" style="text-align:center">
+            <button type="button" onclick="topHireState(31)">Top Hiring State 2021</button>
+            <button type="button" onclick="topHireState(32)">Top Hiring State 2022</button>
+            <button type="button" onclick="topHireState(33)">Top Hiring State 2023</button>
+            </div> 
+            <br><br>
+            
+            <a href="#section_2" style="float:left"><span></span>Prev</a>
+            <a href="#section_4" style="float:right"><span></span>Next</a>
+        </section>
+        <br><hr><br>
+
+        <section id="section_4">
+            <div style="text-align: center; border: thin solid black">
+                <div style="display: inline-block;">
+                    <h2>Based on Hiring Location</h2>
+                </div>
+            </div>
+
+            
+            <!-- <p>While the previous graph showed how much each character spoke, this next graph showcases how often a character was mentioned.</p>
+            <p>To do this, we increase the character's mention value each time their name appears in the script, regardless of who said it.</p>
+            <p>Similar to the first chart, we see that Michael has been name dropped the most out of any character, with Dwight and Jim as second and third place overall.</p>
+            <p>Interestingly, we can see that Jim and Pam's names appeared at approximately equal frequencies up until Season 6, when Jim started to be mentioned much more frequently. </p> -->
+
+            <div class="svg_canvas" style="text-align: center;">
+                <svg id="svg_4" width="1200" height="650"></svg>
+            </div>
+            <br>    
+            <div class="buttons" style="text-align:center">
+            <button type="button" onclick="topHireLoc(41)">Top Hiring Location 2021</button>
+            <button type="button" onclick="topHireLoc(42)">Top Hiring Location 2022</button>
+            <button type="button" onclick="topHireLoc(43)">Top Hiring Location 2023</button> 
+            </div> 
+            <br><br>
+            <a href="#section_3" style="float:left"><span></span>Prev</a>
+            <a href="#section_1" style="float:right"><span></span>Back to Main</a>
+        </section>
+        <br><hr><br>
+
+        
+        <br><br><br><br><br><br><hr>
+        <script src = "javascript/viz.js"></script>
+  </body>
+</html>

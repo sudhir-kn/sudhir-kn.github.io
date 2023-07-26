@@ -1,0 +1,17 @@
+text {
+    font-size: 1.2em;
+    font-family: sans-serif;
+}
+
+.tick text {
+    fill: #635f5d
+}
+
+.tick line {
+    stroke: #c0c0bb;
+}
+
+.axis-label {
+    font-size: 1.5em;
+    fill: #635f5d
+}
