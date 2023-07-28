@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+        <meta name="dcterms.created" content="Mon, 17 Jul 2023 02:38:15 GMT">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <title>CS 416 - Narrative Visualization</title>
+        <link rel="stylesheet" href="style/styles.css">
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="javascript/viz.js"></script>
+    </head>
+    <body>
+        <div style="text-align: center; border: thin solid black">
+            <div style="display: inline-block;">
+                <h2>Sponsoring Employers</h2>
+            </div>
+        </div>
+        <div style="text-align: justify;">
+            <p>Click on the below buttons to know Employers who have sponsored H1B visa application during the fiscal year 2021, 2022 and 2023.</p>
+        </div>
+        <div style="text-align: center;">
+            <svg id="svg_2" width="1200" height="650"></svg>
+            <div>
+                <p id = 'p_topemp'></p>
+            </div>
+        </div>
+        <br>
+        <div class="buttons" style="text-align:center">
+            <button type="button" onclick="topEmp(21)">Top Employers 2021</button>
+            <button type="button" onclick="topEmp(22)">Top Employers 2022</button>
+            <button type="button" onclick="topEmp(23)">Top Employers 2023</button> 
+        </div>
+        <br><br>
+        <a href="Index.html" style="float:left"><span></span>Prev</a>
+        <a href="topState.html" style="float:right"><span></span>Next</a>
+        <br><hr><br>
+
+    </body>
+</html>
