@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+        <meta name="dcterms.created" content="Mon, 17 Jul 2023 02:38:15 GMT">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <title>CS 416 - Narrative Visualization</title>
+        <link rel="stylesheet" href="style/styles.css">
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="javascript/viz.js"></script>
+        <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+    </head>
+    <body>
+        <div style="text-align: center; border: thin solid black">
+            <div style="display: inline-block; font-size: large;">
+                <h1>H1B Employer Data FY 2021-2023</h1>
+            </div>
+        </div>
+        <div style="text-align: justify;">
+            <h2>Introduction:</h2>
+            <p>The United States Citizenship and Immigration Services (<a href="https://uscis.gov" target="_blank">USCIS</a>) is an agency under 
+                    the U.S. Department of Homeland Security responsible for overseeing the country's immigration system. 
+                    Its primary role is to administer and enforce immigration laws, including the processing of various 
+                    visa applications.
+        
+                The H1B visa is a non-immigrant visa category in the United States that allows U.S. employers to hire foreign 
+                    workers in specialty occupations. It is designed to bring highly skilled professionals from around the world 
+                    to work in specialized fields such as information technology, engineering, finance, healthcare, and more. 
+                    The H1B visa program helps address skill shortages in certain industries and contributes to the country's 
+                    economic growth and innovation.
+        
+                To obtain an H1B visa, an employer must sponsor a foreign worker by filing a petition with USCIS. The employer 
+                    must demonstrate that the position requires specialized knowledge and that they were unable to find a qualified 
+                    U.S. worker to fill the role. Additionally, the employer must offer the foreign worker a prevailing wage and 
+                    comply with various regulatory requirements.
+        
+                The H1B visa program is subject to an annual numerical cap, which limits the number of new H1B visas that can 
+                    be issued each fiscal year. The cap for most H1B visas is set at 65,000, with an additional 20,000 reserved 
+                    for individuals who hold advanced degrees from U.S. institutions. The demand for H1B visas often exceeds the 
+                    available slots, leading to a competitive and selective application process.
+        
+                USCIS plays a crucial role in processing and adjudicating H1B visa petitions. They review the employer's 
+                    eligibility, the qualifications of the foreign worker, and ensure compliance with the relevant laws and 
+                    regulations. The agency's decisions on H1B visa petitions can have a significant impact on both employers 
+                    and individuals seeking to work in the United States under this program.
+                Analyzing USCIS's H1B employer data can provide valuable insights into the industries, companies, and job 
+                    positions that rely on the H1B visa program, as well as trends in the program's utilization over time.</p>
+
+        </div>
+        <div id="tooltip" class="hidden">
+            <p><strong>Total Applications: </strong><span id="value">0</span></p>
+        </div>
+        <div style="text-align: justify;">
+            <p>Click on the below button to know H1B application trend for the fiscal year 2021, 2022 and 2023.</p>
+        </div>
+        <div style="text-align: center;">
+            <svg id="svg_1" width="1200" height="500"></svg>
+            <div>
+                <p id = 'p_trend'></p>
+            </div>
+            <div class="buttons" style="text-align:center">
+                <button type="button" onclick="trend(11)">H1B Trend</button>
+            </div>
+        </div>
+        <br>
+        <a href="topEmp.html" style="float:right" target="_self"><span></span>Next</a>
+        <br><hr><br>
+
+    </body>
+</html>
