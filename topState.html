@@ -11,27 +11,31 @@
         <link rel="stylesheet" href="style/styles.css">
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="javascript/viz.js"></script>
+        <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     </head>
     <body>
         <div style="text-align: center; border: thin solid black">
             <div style="display: inline-block;">
-                <h2>H1B Opportunities - State wise</h2>
+                <h2>H1B Application Adjudication: Based on State</h2>
             </div>
         </div>
+        <div id="tooltip" class="hidden">
+            <p><strong>Total Applications: </strong><span id="value">0</span></p>
+        </div>
         <div style="text-align: justify;">
-            <p>Click on the below buttons to know state wise H1B Opportunities during the fiscal year 2021, 2022 and 2023.</p>
+            <p>Now, let us take a look at the US States for which most number of applications were adjudicated by USCIS during the fiscal year 2021, 2022 and 2023. <br><br>Click on the buttons below for the detailed information.</p>
         </div>        
         <div style="text-align: center;">
-            <svg id="svg_3" width="1200" height="650"></svg>
+            <svg id="svg_3" width="1200" height="620"></svg>
             <div>
                 <p id = 'p_topstate'></p>
             </div>
         </div>
         <br>
         <div class="buttons" style="text-align:center">
-            <button type="button" onclick="topHireState(31)">Top Hiring State 2021</button>
-            <button type="button" onclick="topHireState(32)">Top Hiring State 2022</button>
-            <button type="button" onclick="topHireState(33)">Top Hiring State 2023</button>
+            <button type="button" onclick="topHireState(31)">Top 10 States 2021</button>
+            <button type="button" onclick="topHireState(32)">Top 10 States 2022</button>
+            <button type="button" onclick="topHireState(33)">Top 10 States 2023</button>
         </div> 
         <br><br>
         <a href="topEmp.html" style="float:left"><span></span>Prev</a>

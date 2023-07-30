@@ -11,30 +11,34 @@
         <link rel="stylesheet" href="style/styles.css">
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="javascript/viz.js"></script>
+        <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
     </head>
     <body>
         <div style="text-align: center; border: thin solid black">
             <div style="display: inline-block;">
-                <h2>Sponsoring Employers</h2>
+                <h2>H1B Application Adjudication: Based on Employer</h2>
             </div>
         </div>
+        <div id="tooltip" class="hidden">
+            <p><strong>Total Applications: </strong><span id="value">0</span></p>
+        </div>
         <div style="text-align: justify;">
-            <p>Click on the below buttons to know Employers who have sponsored H1B visa application during the fiscal year 2021, 2022 and 2023.</p>
+            <p>Now that we are aware of the number of applications adjudicated by USCIS during fiscal year 2021, 2022 and 2023, let us take a look at the Employers with most number of applications adjudicated by USCIS during the same period. <br><br>Click on the buttons below for the detailed information.</p>
         </div>
         <div style="text-align: center;">
-            <svg id="svg_2" width="1200" height="650"></svg>
+            <svg id="svg_2" width="1200" height="620"></svg>
             <div>
                 <p id = 'p_topemp'></p>
             </div>
         </div>
         <br>
         <div class="buttons" style="text-align:center">
-            <button type="button" onclick="topEmp(21)">Top Employers 2021</button>
-            <button type="button" onclick="topEmp(22)">Top Employers 2022</button>
-            <button type="button" onclick="topEmp(23)">Top Employers 2023</button> 
+            <button type="button" onclick="topEmp(21)">Top 10 Employers 2021</button>
+            <button type="button" onclick="topEmp(22)">Top 10 Employers 2022</button>
+            <button type="button" onclick="topEmp(23)">Top 10 Employers 2023</button> 
         </div>
         <br><br>
-        <a href="Index.html" style="float:left"><span></span>Prev</a>
+        <a href="index.html" style="float:left"><span></span>Prev</a>
         <a href="topState.html" style="float:right"><span></span>Next</a>
         <br><hr><br>
 

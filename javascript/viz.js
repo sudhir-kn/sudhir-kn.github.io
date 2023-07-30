@@ -32,7 +32,7 @@ function trend(opt){
       .append('text')
       .attr('class','axis-label')
       .attr("transform", "rotate(-90)")
-      .attr('x', -120)
+      .attr('x', -80)
       .attr('y', -65)
       .attr('fill','black')
       .attr("text-anchor", "end")
@@ -73,7 +73,7 @@ function trend(opt){
     g.append('text')
       .attr('class','axis-label')
       .attr('y', -30)
-      .text('H1B Application Trends for Fiscal Year 2021, 2022 and 2023');
+      .text('H1B Applications Adjudicating Trend for Fiscal Year 2021, 2022 and 2023');
 
     const annotations = [
       {
@@ -163,14 +163,14 @@ function trend(opt){
 
   svg.selectAll('*').remove();
 
-  data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/trend.csv').then(data =>{
+  data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/trend.csv').then(data =>{
     data.forEach(d => {
       d.Total_Application = +d.Total_Application
     });
     graph(data)
   });
   
-  document.getElementById('p_trend').innerHTML = 'Overall, there is a decline in the number of H1B applications starting FY 2022. This may be due to lockdown, closure of government offices, travel bans (Presidential Proclamation) and other restrictions imposed during the second wave of Covid 19. Also, further decline during FY 2023 may be due to not having the complete data when this dataset was made available.<br> Click <strong>"Next"</strong> to know the top Employers who have sponsered H1B visa.'
+  document.getElementById('p_trend').innerHTML = 'Total Applications is the number of H1B applications/petitions adjudicated (ie Approved or Denied) by USCIS during a fiscal year (FY). Overall, there is a decline in the number of H1B applications adjudicated starting FY 2022. This may be due to lockdown, closure of government offices, travel bans (Presidential Proclamation) and other restrictions imposed during the second wave of Covid 19. Also, further decline during FY 2023 may be due to not having the complete data when this dataset was made available.<br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on Employer.'
 }
 
 function topEmp(opt) {
@@ -228,13 +228,13 @@ function topEmp(opt) {
         .attr('width', d => x(xValue(d)))
         .attr('height', y.bandwidth())
         .attr('fill',d => color(yValue(d)))
-        .on('mouseover', function(){d3.select(this).attr('opacity', '0.85');})
-        .on('mouseout', function(){d3.select(this).attr('opacity', '1.0');});
+        .on('mouseover', onMouseOver)
+        .on('mouseout', onMouseOut);
     
     g.append('text')
       .attr('class','axis-label')
       .attr('y', -20)
-      .text('Top 10 Employers sponsoring H1B');
+      .text('Top 10 Employers With Highest Adjudication');
 
     g.selectAll('.label')
         .data(data)
@@ -248,25 +248,72 @@ function topEmp(opt) {
         .style('font-weight', 'bold')
         .style('fill', 'white')
         .text(d => d.Total_Application);
+
+    const annotations = [
+      {
+        note: {
+          label: 'Hover over the bars to know no. of applications'
+        },
+        color: ['steelblue'],
+        x: 1080,
+        y: 0
+      }
+    ]
+              
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations);
+        
+    d3.select('#svg_2')
+        .append('g')
+        .style('font-size', '11px')
+        .call(makeAnnotations);
+    
+    function onMouseOver(d, i) {
+      var xPos = parseFloat(event.pageX);
+      var yPos = parseFloat(event.pageY);
+    
+      d3.select('#tooltip')
+        .style('left', (xPos + 15) + 'px')
+        .style('top', (yPos + 15) + 'px')
+        .html("<p style='font-family:sans-serif; font-size:12px'> <strong>Employer: </strong>" + d.Employer_Name + "<br>" + "<strong>Total Applications: </strong>" + d.Total_Application+ "</p>");
+            
+      d3.select('#tooltip').classed('hidden', false);
+          
+      d3.select(this)
+        .attr('opacity', '0.85')
+        .attr('y', d => y(yValue(d)) + 1)
+        .attr('width', d => x(xValue(d)) + 1)
+        .attr('height', y.bandwidth() + 0.5);          
+    }
+          
+    function onMouseOut(d, i){
+      d3.select(this)
+        .attr('opacity', '1.0')
+        .attr('y', d => y(yValue(d)))
+        .attr('width', d => x(xValue(d)))
+        .attr('height', y.bandwidth());          
+          
+      d3.select('#tooltip').classed('hidden', true);
+    }  
   };
 
   svg.selectAll('*').remove();
 
   if (opt == 21 ){
-      data = d3.csv("https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/emp_2021.csv").then(data => {
+      data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/emp_2021.csv').then(data => {
         render(data);
       });
-      document.getElementById('p_topemp').innerHTML = 'Above are the top 10 Employers who have sponsered H1B application during the FY 2021. Majority of them are Consulting Firms. <br> Click <strong>"Next"</strong> to know the state wise H1B opportunities.'
+      document.getElementById('p_topemp').innerHTML = 'Above are the top 10 Employers with most H1B applications adjudicated during the FY 2021. Majority of them are Consulting Firms. <br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on State <u>or</u> <strong>"Prev"</strong> to go back to the previous page.'
     } else if (opt == 22){
-        data = d3.csv("https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/emp_2022.csv").then(data => {
+        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/emp_2022.csv').then(data => {
          render(data);
       });
-      document.getElementById('p_topemp').innerHTML = 'Above are the top 10 Employers who have sponsered H1B application during the FY 2022.  Majority of them are Consulting Firms.<br> Click <strong>"Next"</strong> to know the state wise H1B opportunities.'
+      document.getElementById('p_topemp').innerHTML = 'Above are the top 10 Employers with most H1B applications adjudicated during the FY 2022.  Majority of them are Consulting Firms.<br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on State <u>or</u> <strong>"Prev"</strong> to go back to the previous page.'
     } else if (opt == 23){
-        data = d3.csv("https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/emp_2023.csv").then(data => {
+        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/emp_2023.csv').then(data => {
           render(data);
       });
-      document.getElementById('p_topemp').innerHTML = 'Above are the top 10 Employers who have sponsered H1B application during the FY 2023.  Majority of them are Consulting Firms.<br> Click <strong>"Next"</strong> to know the state wise H1B opportunities.'
+      document.getElementById('p_topemp').innerHTML = 'Above are the top 10 Employers with most H1B applications adjudicated during the FY 2023.  Majority of them are Consulting Firms.<br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on State <u>or</u> <strong>"Prev"</strong> to go back to the previous page.'
     }  
 }    
 
@@ -326,13 +373,13 @@ function topHireState(opt){
         .attr('width', d => x(xValue(d)))
         .attr('height', y.bandwidth())
         .attr('fill',d => color(yValue(d)))
-        .on('mouseover', function(){d3.select(this).attr('opacity', '0.85');})
-        .on('mouseout', function(){d3.select(this).attr('opacity', '1.0');});
+        .on('mouseover', onMouseOver)
+        .on('mouseout', onMouseOut);
 
       g.append('text')
         .attr('class','axis-label')
         .attr('y', -20)
-        .text('Top 10 US states with H1B job opportunities');
+        .text('Top 10 States With Highest Adjudication');
 
       g.selectAll('.label')
         .data(data)
@@ -346,25 +393,72 @@ function topHireState(opt){
         .style('font-weight', 'bold')
         .style('fill', 'white')
         .text(d => d.Total_Application);
+
+      const annotations = [
+        {
+          note: {
+            label: 'Hover over the bars to know no. of applications'
+          },
+          color: ['steelblue'],
+          x: 1080,
+          y: 0
+        }
+      ]
+                  
+      const makeAnnotations = d3.annotation()
+          .annotations(annotations);
+           
+      d3.select('#svg_3')
+          .append('g')
+          .style('font-size', '11px')
+          .call(makeAnnotations);
+
+      function onMouseOver(d, i) {
+        var xPos = parseFloat(event.pageX);
+        var yPos = parseFloat(event.pageY);
+        
+        d3.select('#tooltip')
+          .style('left', (xPos + 15) + 'px')
+          .style('top', (yPos + 15) + 'px')
+          .html("<p style='font-family:sans-serif; font-size:12px'> <strong>State: </strong>" + d.State + "<br>" + "<strong>Total Applications: </strong>" + d.Total_Application+ "</p>");
+                
+        d3.select('#tooltip').classed('hidden', false);
+              
+        d3.select(this)
+          .attr('opacity', '0.85')
+          .attr('y', d => y(yValue(d)) + 1)
+          .attr('width', d => x(xValue(d)) + 1)
+          .attr('height', y.bandwidth() + 0.5);          
+      }
+              
+      function onMouseOut(d, i){
+        d3.select(this)
+          .attr('opacity', '1.0')
+          .attr('y', d => y(yValue(d)))
+          .attr('width', d => x(xValue(d)))
+          .attr('height', y.bandwidth());          
+              
+        d3.select('#tooltip').classed('hidden', true);
+      }  
     };     
 
     svg.selectAll('*').remove();
 
     if (opt == 31 ){
-      data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/state_2021.csv').then(data => {
+      data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/state_2021.csv').then(data => {
         render(data);
       });
-      document.getElementById('p_topstate').innerHTML = 'Above are the top 10 state wise H1B opportunities during the FY 2021. <br> Click <strong>"Next"</strong> to know the location wise H1B opportunities.'
+      document.getElementById('p_topstate').innerHTML = 'Above are the top 10 US States for which most number of applications were adjudicated during the FY 2021. <br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on City <u>or</u> <strong>"Prev"</strong> to go back to the previous page.'
     } else if (opt == 32){
-        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/state_2022.csv').then(data => {
+        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/state_2022.csv').then(data => {
           render(data);
         });
-        document.getElementById('p_topstate').innerHTML = 'Above are the top 10 state wise H1B opportunities during the FY 2022. <br> Click <strong>"Next"</strong> to know the location wise H1B opportunities.'
+        document.getElementById('p_topstate').innerHTML = 'Above are the top 10 US States for which most number of applications were adjudicated during the FY 2022. <br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on City <u>or</u> <strong>"Prev"</strong> to go back to the previous page.'
     } else if (opt == 33){
-        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/state_2023.csv').then(data => {
+        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/state_2023.csv').then(data => {
           render(data);
         });
-        document.getElementById('p_topstate').innerHTML = 'Above are the top 10 state wise H1B opportunities during the FY 2023. <br> Click <strong>"Next"</strong> to know the location wise H1B opportunities.'
+        document.getElementById('p_topstate').innerHTML = 'Above are the top 10 US States for which most number of applications were adjudicated during the FY 2023. <br><br> Click <strong>"Next"</strong> to know more about applications adjudicated based on City <u>or</u> <strong>"Prev"</strong> to go back to the previous page.'
     }  
 }
 
@@ -424,13 +518,13 @@ function topHireLoc(opt){
           .attr('width', d => x(xValue(d)))
           .attr('height', y.bandwidth())
           .attr('fill',d => color(yValue(d)))
-          .on('mouseover', function(){d3.select(this).attr('opacity', '0.85');})
-          .on('mouseout', function(){d3.select(this).attr('opacity', '1.0');});
+          .on('mouseover', onMouseOver)
+          .on('mouseout', onMouseOut);
 
       g.append('text')
         .attr('class','axis-label')
         .attr('y', -20)
-        .text('Top 10 US Locations with H1B job opportunities');
+        .text('Top 10 US Cities With Highest Adjudication');
  
       g.selectAll('.label')
         .data(data)
@@ -444,24 +538,72 @@ function topHireLoc(opt){
         .style('font-weight', 'bold')
         .style('fill', 'white')
         .text(d => d.Total_Application);
+
+      const annotations = [
+        {
+          note: {
+            label: 'Hover over the bars to know no. of applications'
+          },
+          color: ['steelblue'],
+          x: 1080,
+          y: 0
+        }
+      ]
+                    
+      const makeAnnotations = d3.annotation()
+          .annotations(annotations);
+            
+      d3.select('#svg_4')
+          .append('g')
+          .style('font-size', '11px')
+          .call(makeAnnotations);
+ 
+      function onMouseOver(d, i) {
+        var xPos = parseFloat(event.pageX);
+        var yPos = parseFloat(event.pageY);
+         
+        d3.select('#tooltip')
+          .style('left', (xPos + 15) + 'px')
+          .style('top', (yPos + 15) + 'px')
+          .html("<p style='font-family:sans-serif; font-size:12px'> <strong>Location: </strong>" + d.City_Name + "<br>" + "<strong>Total Applications: </strong>" + d.Total_Application + "</p>");
+                  
+        d3.select('#tooltip').classed('hidden', false);
+                
+        d3.select(this)
+          .attr('opacity', '0.85')
+          .attr('y', d => y(yValue(d)) + 1)
+          .attr('width', d => x(xValue(d)) + 1)
+          .attr('height', y.bandwidth() + 0.5);          
+      }
+                
+      function onMouseOut(d, i){
+        d3.select(this)
+          .attr('opacity', '1.0')
+          .attr('y', d => y(yValue(d)))
+          .attr('width', d => x(xValue(d)))
+          .attr('height', y.bandwidth());          
+              
+        d3.select('#tooltip').classed('hidden', true);
+      }  
+  
     };     
 
     svg.selectAll('*').remove();
 
     if (opt == 41 ){
-      data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/place_2021.csv').then(data => {
+      data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/place_2021.csv').then(data => {
         render(data);
       });
-      document.getElementById('p_tophireloc').innerHTML = 'Above are the top 10 location wise H1B opportunities during the FY 2021. <br> Click <strong>"Back to Main"</strong> to return to the main page or close (x) at the the top of the window to exit.'
+      document.getElementById('p_tophireloc').innerHTML = 'Above are the top 10 US Cities for which most number of applications were adjudicated during the FY 2021. <br><br> Click <strong>"Back to Main"</strong> to return to the main page <u>or</u> <strong>"Prev"</strong> to go back to the previous page <u>or</u> <strong>Close (X)</strong> at the the top of the window to exit.'
     } else if (opt == 42){
-        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/place_2022.csv').then(data => {
+        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/place_2022.csv').then(data => {
           render(data);
       });
-      document.getElementById('p_tophireloc').innerHTML = 'Above are the top 10 location wise H1B opportunities during the FY 2021. <br> Click <strong>"Back to Main"</strong> to return to the main page or close (x) at the the top of the window to exit.'
+      document.getElementById('p_tophireloc').innerHTML = 'Above are the top 10 US Cities for which most number of applications were adjudicated during the FY 2022. <br><br> Click <strong>"Back to Main"</strong> to return to the main page <u>or</u> <strong>"Prev"</strong> to go back to the previous page <u>or</u> <strong>Close (X)</strong> at the the top of the window to exit.'
     } else if (opt == 43){
-        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/Narrative_Visualization/main/data/place_2023.csv').then(data => {
+        data = d3.csv('https://raw.githubusercontent.com/sudhir-kn/sudhir-kn.github.io/master/data/place_2023.csv').then(data => {
           render(data);
       });
-      document.getElementById('p_tophireloc').innerHTML = 'Above are the top 10 location wise H1B opportunities during the FY 2021. <br> Click <strong>"Back to Main"</strong> to return to the main page or close (x) at the the top of the window to exit.'
+      document.getElementById('p_tophireloc').innerHTML = 'Above are the top 10 US Cities for which most number of applications were adjudicated during the FY 2023. <br><br> Click <strong>"Back to Main"</strong> to return to the main page <u>or</u> <strong>"Prev"</strong> to go back to the previous page <u>or</u> <strong>Close (X)</strong> at the the top of the window to exit.'
     }      
 }
